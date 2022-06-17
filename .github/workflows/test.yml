@@ -1,0 +1,44 @@
+on:
+  push: {}
+  workflow_dispatch: {}
+
+jobs:
+  interp:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        v1: [ "VALUE1" ]
+        v2: [ "VALUE2" ]
+
+    env:
+      V1: ${{ matrix.v1 }}
+      V1_V2: ${{ matrix.v1 }}_${{ matrix.v2 }}
+      x_V1: x_${{ matrix.v1 }}
+      x_V1_V2: x_${{ matrix.v1 }}_${{ matrix.v2 }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Dump environment
+        run: |
+          echo "V1: $V1"
+          echo "V1_V2: $V1_V2"
+          echo "x_V1: $x_V1"
+          echo "x_V1_V2: $x_V1_V2"
+
+      - name: Interpolate in script
+        run: |
+          echo "env.V1: ${{ env.V1 }}"
+          echo "env.V1_V2: ${{ env.V1_V2 }}"
+          echo "env.x_V1: ${{ env.x_V1 }}"
+          echo "env.x_V1_V2: ${{ env.x_V1_V2 }}"
+
+      - name: Interpolate in composite action
+        uses: ./.github/actions/composite-action
+        with:
+          v1: ${{ env.V1 }}
+          v1_v2: ${{ env.V1_V2 }}
+          x_v1: ${{ env.x_V1 }}
+          x_v1_v2: ${{ env.x_V1_V2 }}

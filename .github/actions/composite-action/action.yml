@@ -1,0 +1,28 @@
+name: 'X'
+description: 'Y'
+
+inputs:
+  v1:
+    description: "."
+    required: true
+  v1_v2:
+    description: "."
+    required: true
+  x_v1:
+    description: "."
+    required: true
+  x_v1_v2:
+    description: "."
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Show inputs"
+      run: |
+        set +e
+        echo "inputs.v1: ${{ inputs.v1 }}"
+        echo "inputs.v1_v2: ${{ inputs.v1_v2 }}"
+        echo "inputs.x_v1: ${{ inputs.x_v1 }}"
+        echo "inputs.x_v1_v2: ${{ inputs.x_v1_v2 }}"
+      shell: bash
